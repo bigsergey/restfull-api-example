@@ -16,11 +16,13 @@ module.exports = {
         if (_.isEmpty(req.query)) {
             User.find(function(err, post) {
                 if (err) return next(err);
+                res.status(200);
                 res.json(post);
             });
         } else {
             User.findByTitle(req.query.username).limit(req.query.limit || 0).exec(function(err, post) {
                 if (err) return next(err);
+                res.status(200);
                 res.json(post);
             });
         }
@@ -33,6 +35,7 @@ module.exports = {
     post: function createUser(req, res, next) {
         User.create(req.body, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     }

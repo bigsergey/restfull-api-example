@@ -14,6 +14,7 @@ module.exports = {
     get: function getMovieById(req, res, next) {
         Movie.findById(req.params.movieId, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     },
@@ -25,6 +26,7 @@ module.exports = {
     put: function updateMovieById(req, res, next) {
         Movie.findByIdAndUpdate(req.params.movieId, req.body, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     },
@@ -36,6 +38,7 @@ module.exports = {
     delete: function deleteMovieById(req, res, next) {
         Movie.findByIdAndRemove(req.params.movieId, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     }

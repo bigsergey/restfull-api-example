@@ -24,6 +24,7 @@ module.exports = {
             }).on('error', function(err) {
                 console.log('Movie find error', err);
             }).on('close', function(){
+                res.status(200);
                 res.json(movies);
             });
         });
@@ -43,6 +44,7 @@ module.exports = {
             }
         }, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     }

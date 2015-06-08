@@ -33,6 +33,28 @@ app.use('/api-docs', function(req, res) {
 app.use('/swagger', express.static(path.join(__dirname, 'public')));
 
 
+app.get('*', function(req, res, next) {
+	var err = new Error();
+	err.status = 404;
+	next(err);
+});
+
+app.use(function(err, req, res, next) {
+	if(err.status !== 404) {
+		return next();
+	}
+	res.status(404);
+	res.send(err.message);
+});
+
+app.use(function(err, req, res, next) {
+	if(err.status !== 500) {
+		return next();
+	}
+	res.status(500);
+	res.send('Internal server error!');
+});
+
 server.listen(port, function() {
     app.setHost(server.address().address + ':' + server.address().port);
 });

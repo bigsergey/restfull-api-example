@@ -16,6 +16,7 @@ module.exports = {
         if (_.isEmpty(req.query)) {
             Movie.find(function(err, post) {
                 if (err) return next(err);
+                res.status(200);
                 res.json(post);
             });
         } else {
@@ -33,6 +34,7 @@ module.exports = {
     post: function addMovie(req, res, next) {
         Movie.create(req.body, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     }

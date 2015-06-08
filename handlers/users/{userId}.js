@@ -14,6 +14,7 @@ module.exports = {
     get: function getUserById(req, res, next) {
         User.findById(req.params.userId, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     },
@@ -25,6 +26,7 @@ module.exports = {
     put: function updateUserById(req, res, next) {
         User.findByIdAndUpdate(req.params.userId, req.body, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     },
@@ -36,6 +38,7 @@ module.exports = {
     delete: function deleteUserById(req, res, next) {
         User.findByIdAndRemove(req.params.userId, function(err, post) {
             if (err) return next(err);
+            res.status(200);
             res.json(post);
         });
     }
