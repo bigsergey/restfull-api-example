@@ -1,16 +1,19 @@
 'use strict';
 
-function user(options) {
-    if (!options) {
-        options = {};
-    }
-    
-    this.id = options.id;
-    this.username = options.username;
-    this.firstName = options.firstName;
-    this.lastName = options.lastName;
-    this.email = options.email;
-    this.movies = options.movies;
-}
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-module.exports = user;
+
+var UserSchema = new Schema({
+	username: String,
+	firstName: String,
+	lastName: String,
+	email: String,
+	movies: [Schema.Types.ObjectId]
+});
+
+UserSchema.static('findByUsername', function (username, callback) {
+	return this.find({username: username}, callback);
+});
+
+module.exports = mongoose.model('User', UserSchema);

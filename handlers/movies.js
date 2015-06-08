@@ -9,7 +9,7 @@ var _ = require('lodash-node');
 module.exports = {
     /**
      * Returns all movies from the Rental Service
-     * parameters: tags, limit
+     * parameters: title, limit
      * produces: application/json
      */
     get: function findMovies(req, res, next) {

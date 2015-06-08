@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a simple Rental Service server.",
-        "version": "0.0.3",
+        "version": "0.0.4",
         "title": "Swagger Rental Service",
         "contact": {
             "name": "bolszow@gmail.com"
@@ -191,6 +191,37 @@
             }
         },
         "/users": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user list",
+                "description": "",
+                "operationId": "getUserList",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "username",
+                        "description": "The name that to be fetched",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "user"
@@ -219,12 +250,12 @@
                 }
             }
         },
-        "/users/{username}": {
+        "/users/{userId}": {
             "get": {
                 "tags": [
                     "user"
                 ],
-                "summary": "Get user by name",
+                "summary": "Get user by ID",
                 "description": "",
                 "operationId": "getUserByName",
                 "produces": [
@@ -233,8 +264,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
-                        "description": "The name that to be fetchd",
+                        "name": "userId",
+                        "description": "Return user by ID",
                         "required": true,
                         "type": "string"
                     }
@@ -267,7 +298,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
+                        "name": "userId",
                         "description": "name that need to be updated",
                         "required": true,
                         "type": "string"
@@ -306,7 +337,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
+                        "name": "userId",
                         "description": "The name that needs to be deleted",
                         "required": true,
                         "type": "string"
