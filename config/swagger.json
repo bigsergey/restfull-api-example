@@ -34,7 +34,7 @@
                 "parameters": [
                     {
                         "in": "body",
-                        "name": "body",
+                        "name"  : "body",
                         "description": "Movie object to add to the Rental Service",
                         "required": true,
                         "schema": {
@@ -379,9 +379,6 @@
                 "responses": {
                     "200": {
                         "description": "List of user movies"
-                    },
-                    "404": {
-                        "description": "User doesn't have any movies"
                     }
                 }
             },
@@ -414,7 +411,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/movie"
+                                "type": "string"
                             }
                         }
                     }

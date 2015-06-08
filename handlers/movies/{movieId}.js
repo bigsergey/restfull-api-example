@@ -24,7 +24,7 @@ module.exports = {
      */
     put: function updateMovieById(req, res, next) {
         Movie.findByIdAndUpdate(req.params.movieId, req.body, function(err, post) {
-            if (err) return nex(err);
+            if (err) return next(err);
             res.json(post);
         });
     },
