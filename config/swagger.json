@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a simple Rental Service server.",
-        "version": "0.0.2",
+        "version": "0.0.3",
         "title": "Swagger Rental Service",
         "contact": {
             "name": "bolszow@gmail.com"
@@ -51,39 +51,6 @@
                     },
                     "405": {
                         "description": "Invalid input"
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "movie"
-                ],
-                "summary": "Update existing movie",
-                "description": "",
-                "operationId": "updateMovie",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Movie object to update existing movie",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/movie"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Movie not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
                     }
                 }
             },
@@ -143,8 +110,7 @@
                         "name": "movieId",
                         "description": "ID of movie that needs to be fetched",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -163,11 +129,11 @@
                 "tags": [
                     "movie"
                 ],
-                "summary": "Updates a movie in the store with form data",
+                "summary": "Update existing movie",
                 "description": "",
-                "operationId": "updateMovieWithForm",
+                "operationId": "updateMovie",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -176,35 +142,26 @@
                     {
                         "in": "path",
                         "name": "movieId",
-                        "description": "Id of movie what needs to be updated",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "title",
-                        "description": "Updated title of the movie",
+                        "description": "ID of movie that needs to be fetched",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "in": "formData",
-                        "name": "status",
-                        "description": "Updated status of the movie",
+                        "in": "body",
+                        "name": "body",
+                        "description": "Movie object to update existing movie",
                         "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
                         "schema": {
                             "$ref": "#/definitions/movie"
                         }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Movie not found"
                     },
                     "405": {
-                        "description": "Invalid input"
+                        "description": "Validation exception"
                     }
                 }
             },
@@ -220,8 +177,7 @@
                         "name": "movieId",
                         "in": "path",
                         "description": "Id of movie to delete",
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -375,8 +331,7 @@
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"
@@ -390,8 +345,7 @@
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
                 "categories": {
                     "type": "array",
@@ -419,8 +373,7 @@
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
                 "username": {
                     "type": "string"

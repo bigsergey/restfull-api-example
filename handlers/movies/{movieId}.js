@@ -1,30 +1,42 @@
 'use strict';
+
+var Movie = require('./../../models/movie');
+
 /**
  * Operations on /movies/{movieId}
  */
 module.exports = {
     /**
-     * 
+     *
      * parameters: movieId
      * produces: application/json
      */
-    get: function getMovieById(req, res) {
-        res.send(501);
+    get: function getMovieById(req, res, next) {
+        Movie.findById(req.params.movieId, function(err, post) {
+            if (err) return next(err);
+            res.json(post);
+        });
     },
     /**
-     * 
+     *
      * parameters: movieId, title, status
      * produces: application/json
      */
-    put: function updateMovieWithForm(req, res) {
-        res.send(501);
+    put: function updateMovieById(req, res, next) {
+        Movie.findByIdAndUpdate(req.params.movieId, req.body, function(err, post) {
+            if (err) return nex(err);
+            res.json(post);
+        });
     },
     /**
-     * 
+     *
      * parameters: movieId
-     * produces: 
+     * produces:
      */
-    delete: function deleteMovie(req, res) {
-        res.send(501);
+    delete: function deleteMovieById(req, res, next) {
+        Movie.findByIdAndRemove(req.params.movieId, function(err, post) {
+            if (err) return next(err);
+            res.json(post);
+        });
     }
 };
