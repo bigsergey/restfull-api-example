@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a simple Rental Service server.",
-        "version": "0.0.4",
+        "version": "0.0.5",
         "title": "Swagger Rental Service",
         "contact": {
             "name": "bolszow@gmail.com"
@@ -203,7 +203,7 @@
                 ],
                 "parameters": [
                     {
-                        "in": "path",
+                        "in": "query",
                         "name": "username",
                         "description": "The name that to be fetched",
                         "required": false,
@@ -352,6 +352,76 @@
                     },
                     "404": {
                         "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/users/{userId}/movies": {
+            "get": {
+                "tags": [
+                    "user movies"
+                ],
+                "summary": "List of user movies",
+                "description": "",
+                "operationId": "userMovies",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "User ID whose list of movies should be displayed",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of user movies"
+                    },
+                    "404": {
+                        "description": "User doesn't have any movies"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user movies"
+                ],
+                "summary": "Update list of user movies",
+                "description": "",
+                "operationId": "updateUserMovies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "User ID whose list of movies should be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New user movies list",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/movie"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful"
                     }
                 }
             }
