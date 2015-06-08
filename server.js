@@ -36,7 +36,7 @@ app.use(swagger.init(app, {
     swaggerVersion: '1.0',
     basePath: 'http://localhost:8080',
     swaggerURL: '/swagger',
-    swaggerJSON: '/api-docs.json',
+    swaggerJSON: '/api-docs',
     swaggerUI: './public/swagger/',
     apis: ['./api.js']
 }));
