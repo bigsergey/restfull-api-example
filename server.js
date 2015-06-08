@@ -1,14 +1,16 @@
+'use strict';
+
+var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-
-
-var routes = require('./app/routes/index');
-
+var swaggerize = require('swaggerize-express');
+var path = require('path');
 
 var app = express();
-var port = process.env.PORT || 8080;
+var server = http.createServer(app);
+var port = process.env.PORT || 8000;
 
+var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost/restapi', function(err) {
     if (err) {
@@ -18,14 +20,19 @@ mongoose.connect('mongodb://localhost/restapi', function(err) {
     }
 });
 
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
 app.use(bodyParser.json());
 
-app.use('/api', routes);
+app.use(swaggerize({
+    api: path.resolve('./config/swagger.json'),
+    handlers: path.resolve('./handlers')
+}));
 
-app.listen(port);
+app.use('/api-docs', function(req, res) {
+    res.sendFile(path.join(__dirname,'/config/swagger.json'));
+});
+app.use('/swagger', express.static(path.join(__dirname, 'public')));
 
-console.log('Server is listening on port ' + port + ' http://localhost:' + port);
+
+server.listen(port, function() {
+    app.setHost(server.address().address + ':' + server.address().port);
+});

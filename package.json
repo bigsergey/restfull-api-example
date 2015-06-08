@@ -1,10 +1,38 @@
 {
   "name": "restfull-api-example",
-  "main": "server.js",
+  "description": "",
+  "version": "0.1.0",
+  "author": "Sergey Bolshov <bolszow@gmail.com>",
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bigsergey/restfull-api-example.git"
+  },
+  "bugs": "http://github.com/bigsergey/restfull-api-example/issues",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "engines": {
+    "node": "~0.10.22"
+  },
   "dependencies": {
-    "body-parser": "~1.0.1",
-    "express": "~4.0.0",
+    "body-parser": "^1.9.0",
+    "express": "^4.0.0",
     "lodash-node": "^3.9.3",
-    "mongoose": "~3.6.13"
-  }
+    "mongoose": "^4.0.5",
+    "swaggerize-express": "^3.0.0"
+  },
+  "devDependencies": {
+    "tape": "^3.0.0",
+    "jshint": "^2.4.1",
+    "istanbul": "~0.2.3",
+    "enjoi": "~0.1.16",
+    "supertest": "~0.13.0"
+  },
+  "scripts": {
+    "test": "tape tests/*.js",
+    "cover": "istanbul cover tape -- tests/*.js",
+    "lint": "jshint -c .jshintrc index.js handlers models"
+  },
+  "main": "./server"
 }

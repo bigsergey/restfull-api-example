@@ -2,17 +2,17 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a simple Rental Service server.",
-        "version": "0.0.1",
+        "version": "0.0.5",
         "title": "Swagger Rental Service",
         "contact": {
             "name": "bolszow@gmail.com"
         },
         "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
         }
     },
-    "basePath": "/",
+    "basePath": "/api",
     "schemes": [
         "http"
     ],
@@ -34,7 +34,7 @@
                 "parameters": [
                     {
                         "in": "body",
-                        "name": "body",
+                        "name"  : "body",
                         "description": "Movie object to add to the Rental Service",
                         "required": true,
                         "schema": {
@@ -51,49 +51,13 @@
                     },
                     "405": {
                         "description": "Invalid input"
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorModel"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "tags": [
-                    "movie"
-                ],
-                "summary": "Update existing movie",
-                "description": "",
-                "operationId": "updateMovie",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "description": "Movie object to update existing movie",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/movie"
-                        }
-                    }
-                ],
-                "responses": {
-                    "404": {
-                        "description": "Movie not found"
-                    },
-                    "405": {
-                        "description": "Validation exception"
                     }
                 }
             },
             "get": {
+                "tags": [
+                    "movie"
+                ],
                 "description": "Returns all movies from the Rental Service",
                 "operationId": "findMovies",
                 "produces": [
@@ -101,15 +65,11 @@
                 ],
                 "parameters": [
                     {
-                        "name": "tags",
+                        "name": "title",
                         "in": "query",
-                        "description": "tags to filter by",
+                        "description": "Title to filter by",
                         "required": false,
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        },
-                        "collectionFormat": "csv"
+                        "type": "string"
                     },
                     {
                         "name": "limit",
@@ -128,12 +88,6 @@
                             "items": {
                                 "$ref": "#/definitions/movie"
                             }
-                        }
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorModel"
                         }
                     }
                 }
@@ -156,8 +110,7 @@
                         "name": "movieId",
                         "description": "ID of movie that needs to be fetched",
                         "required": true,
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -169,12 +122,6 @@
                     },
                     "404": {
                         "description": "Movie not found"
-                    },
-                    "default": {
-                        "description": "unexpected error",
-                        "schema": {
-                            "$ref": "#/definitions/errorModel"
-                        }
                     }
                 }
             },
@@ -182,11 +129,11 @@
                 "tags": [
                     "movie"
                 ],
-                "summary": "Updates a movie in the store with form data",
+                "summary": "Update existing movie",
                 "description": "",
-                "operationId": "updateMovieWithForm",
+                "operationId": "updateMovie",
                 "consumes": [
-                    "application/x-www-form-urlencoded"
+                    "application/json"
                 ],
                 "produces": [
                     "application/json"
@@ -195,39 +142,33 @@
                     {
                         "in": "path",
                         "name": "movieId",
-                        "description": "Id of movie what needs to be updated",
-                        "required": true,
-                        "type": "integer",
-                        "format": "int64"
-                    },
-                    {
-                        "in": "formData",
-                        "name": "title",
-                        "description": "Updated title of the movie",
+                        "description": "ID of movie that needs to be fetched",
                         "required": true,
                         "type": "string"
                     },
                     {
-                        "in": "formData",
-                        "name": "status",
-                        "description": "Updated status of the movie",
+                        "in": "body",
+                        "name": "body",
+                        "description": "Movie object to update existing movie",
                         "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "successful operation",
                         "schema": {
                             "$ref": "#/definitions/movie"
                         }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "Movie not found"
                     },
                     "405": {
-                        "description": "Invalid input"
+                        "description": "Validation exception"
                     }
                 }
             },
             "delete": {
+                "tags": [
+                    "movie"
+                ],
                 "summary": "Delete a movie",
                 "description": "",
                 "operationId": "deleteMovie",
@@ -236,8 +177,7 @@
                         "name": "movieId",
                         "in": "path",
                         "description": "Id of movie to delete",
-                        "type": "integer",
-                        "format": "int64"
+                        "type": "string"
                     }
                 ],
                 "responses": {
@@ -251,6 +191,37 @@
             }
         },
         "/users": {
+            "get": {
+                "tags": [
+                    "user"
+                ],
+                "summary": "Get user list",
+                "description": "",
+                "operationId": "getUserList",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "username",
+                        "description": "The name that to be fetched",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "tags": [
                     "user"
@@ -274,17 +245,17 @@
                 ],
                 "responses": {
                     "default": {
-                        "description": "succesful operation"
+                        "description": "successful operation"
                     }
                 }
             }
         },
-        "/users/{username}": {
+        "/users/{userId}": {
             "get": {
                 "tags": [
                     "user"
                 ],
-                "summary": "Get user by name",
+                "summary": "Get user by ID",
                 "description": "",
                 "operationId": "getUserByName",
                 "produces": [
@@ -293,8 +264,8 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
-                        "description": "The name that to be fetchd",
+                        "name": "userId",
+                        "description": "Return user by ID",
                         "required": true,
                         "type": "string"
                     }
@@ -327,7 +298,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
+                        "name": "userId",
                         "description": "name that need to be updated",
                         "required": true,
                         "type": "string"
@@ -366,7 +337,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "username",
+                        "name": "userId",
                         "description": "The name that needs to be deleted",
                         "required": true,
                         "type": "string"
@@ -384,14 +355,81 @@
                     }
                 }
             }
+        },
+        "/users/{userId}/movies": {
+            "get": {
+                "tags": [
+                    "user movies"
+                ],
+                "summary": "List of user movies",
+                "description": "",
+                "operationId": "userMovies",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "User ID whose list of movies should be displayed",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of user movies"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "user movies"
+                ],
+                "summary": "Update list of user movies",
+                "description": "",
+                "operationId": "updateUserMovies",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userId",
+                        "description": "User ID whose list of movies should be updated",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "New user movies list",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Operation successful"
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "Category": {
+            "type": "object",
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
                 "title": {
                     "type": "string"
@@ -399,21 +437,22 @@
             }
         },
         "movie": {
+            "type": "object",
             "required": [
-                "title",
-                "posterUrls"
+                "title"
             ],
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
-                "category": {
-                    "$ref": "#/definitions/Category"
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Category"
+                    }
                 },
                 "title": {
-                    "type": "string",
-                    "example": "x-men"
+                    "type": "string"
                 },
                 "posterUrls": {
                     "type": "array",
@@ -424,10 +463,15 @@
             }
         },
         "user": {
+            "type": "object",
+            "required": [
+                "username",
+                "firstName",
+                "lastName"
+            ],
             "properties": {
                 "id": {
-                    "type": "integer",
-                    "format": "int64"
+                    "type": "string"
                 },
                 "username": {
                     "type": "string"
@@ -440,21 +484,12 @@
                 },
                 "email": {
                     "type": "string"
-                }
-            }
-        },
-        "errorModel": {
-            "required": [
-                "code",
-                "message"
-            ],
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "format": "int32"
                 },
-                "message": {
-                    "type": "string"
+                "movies": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/movie"
+                    }
                 }
             }
         }
