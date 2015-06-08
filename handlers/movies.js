@@ -1,6 +1,7 @@
 'use strict';
 
 var Movie = require('./../models/movie');
+var _ = require('lodash-node');
 
 /**
  * Operations on /movies
@@ -11,8 +12,18 @@ module.exports = {
      * parameters: tags, limit
      * produces: application/json
      */
-    get: function findMovies(req, res) {
-        res.send(501);
+    get: function findMovies(req, res, next) {
+        if (_.isEmpty(req.query)) {
+            Movie.find(function(err, post) {
+                if (err) return next(err);
+                res.json(post);
+            });
+        } else {
+            Movie.findByTitle(req.query.title).limit(req.query.limit || 0).exec(function(err, post) {
+                if (err) return next(err);
+                res.json(post);
+            });
+        }
     },
     /**
      *
@@ -20,17 +31,9 @@ module.exports = {
      * produces: application/json
      */
     post: function addMovie(req, res, next) {
-        Movie.create(req.body, function (err, post) {
+        Movie.create(req.body, function(err, post) {
             if (err) return next(err);
             res.json(post);
         });
-    },
-    /**
-     *
-     * parameters: body
-     * produces: application/json
-     */
-    put: function updateMovie(req, res) {
-        res.send(501);
     }
 };
