@@ -2,7 +2,6 @@
 
 var User = require('./../../../models/user');
 var Movie = require('./../../../models/movie');
-var _ = require('lodash-node');
 
 /**
  * Operations on /users/{userId}/movies
@@ -15,15 +14,32 @@ module.exports = {
      * produces: application/json
      */
     get: function userMovies(req, res, next) {
+        if (!Movie.isValidId(req.params.movieId)) {
+            var badRequest = new Error('Invalid user ID');
+            badRequest.status = 400;
+            return next(badRequest);
+        }
+
         User.findById(req.params.userId, function(err, post) {
             if (err) return next(err);
+
+            if (!post) {
+                var notFound = new Error('User not found');
+                notFound.status = 404;
+                return next(notFound);
+            }
+
             var movies = [];
-            var stream = Movie.find({ _id: {$in: post.movies}}).stream();
-            stream.on('data', function (movie) {
+            var stream = Movie.find({
+                _id: {
+                    $in: post.movies
+                }
+            }).stream();
+            stream.on('data', function(movie) {
                 movies.push(movie);
             }).on('error', function(err) {
                 console.log('Movie find error', err);
-            }).on('close', function(){
+            }).on('close', function() {
                 res.status(200);
                 res.json(movies);
             });
@@ -36,6 +52,12 @@ module.exports = {
      * produces: application/json
      */
     put: function updateUserMovies(req, res, next) {
+        if (!Movie.isValidId(req.params.movieId)) {
+            var badRequest = new Error('Invalid user ID');
+            badRequest.status = 400;
+            return next(badRequest);
+        }
+
         User.update({
             _id: req.params.userId
         }, {
@@ -44,6 +66,13 @@ module.exports = {
             }
         }, function(err, post) {
             if (err) return next(err);
+
+            if (!post) {
+                var notFound = new Error('User not found');
+                notFound.status = 404;
+                return next(notFound);
+            }
+
             res.status(200);
             res.json(post);
         });
