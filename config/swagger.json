@@ -58,7 +58,8 @@
                 "tags": [
                     "movie"
                 ],
-                "description": "Returns all movies from the Rental Service",
+                "summary": "Returns all movies from the Rental Service",
+                "description": "",
                 "operationId": "findMovies",
                 "produces": [
                     "application/json"

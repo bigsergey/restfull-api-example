@@ -74,7 +74,7 @@ module.exports = {
             }
 
             res.status(200);
-            res.json(post);
+            res.json('Operation successful');
         });
     }
 
