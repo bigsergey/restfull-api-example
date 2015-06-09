@@ -35,21 +35,28 @@ app.use('/swagger', express.static(path.join(__dirname, 'public')));
 
 app.get('*', function(req, res, next) {
 	var err = new Error();
-	err.status = 404;
 	next(err);
 });
 
 app.use(function(err, req, res, next) {
 	if(err.status !== 404) {
-		return next();
+		return next(err);
 	}
 	res.status(404);
 	res.send(err.message);
 });
 
 app.use(function(err, req, res, next) {
-	if(err.status !== 500) {
+	if(err.status !== 400) {
 		return next();
+	}
+	res.status(400);
+	res.send(err.message);
+});
+
+app.use(function(err, req, res, next) {
+	if(err.status !== 500) {
+		return next(err);
 	}
 	res.status(500);
 	res.send('Internal server error!');

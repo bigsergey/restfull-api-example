@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This is a simple Rental Service server.",
-        "version": "0.0.5",
+        "version": "0.0.7",
         "title": "Swagger Rental Service",
         "contact": {
             "name": "bolszow@gmail.com"
@@ -49,8 +49,8 @@
                             "$ref": "#/definitions/movie"
                         }
                     },
-                    "405": {
-                        "description": "Invalid input"
+                    "400": {
+                        "description": "Validation exception"
                     }
                 }
             },
@@ -122,6 +122,9 @@
                     },
                     "404": {
                         "description": "Movie not found"
+                    },
+                    "400": {
+                        "description": "Invalid movie ID"
                     }
                 }
             },
@@ -160,7 +163,7 @@
                     "404": {
                         "description": "Movie not found"
                     },
-                    "405": {
+                    "400": {
                         "description": "Validation exception"
                     }
                 }
@@ -182,10 +185,16 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "Movie has been removed",
+                        "schema": {
+                            "$ref": "#/definitions/movie"
+                        }
                     },
                     "400": {
-                        "description": "Invalid movie value"
+                        "description": "Invalid movie ID"
+                    },
+                    "404": {
+                        "description": "Movie not found"
                     }
                 }
             }
@@ -425,17 +434,6 @@
         }
     },
     "definitions": {
-        "Category": {
-            "type": "object",
-            "properties": {
-                "id": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
         "movie": {
             "type": "object",
             "required": [
@@ -448,7 +446,7 @@
                 "categories": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/Category"
+                        "type": "string"
                     }
                 },
                 "title": {

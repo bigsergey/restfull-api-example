@@ -2,7 +2,7 @@
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-
+var validId = require('mongoose-valid-id');
 
 var UserSchema = new Schema({
 	username: String,
@@ -15,5 +15,7 @@ var UserSchema = new Schema({
 UserSchema.static('findByUsername', function (username, callback) {
 	return this.find({username: username}, callback);
 });
+
+UserSchema.plugin(validId);
 
 module.exports = mongoose.model('User', UserSchema);
