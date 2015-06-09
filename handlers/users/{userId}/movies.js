@@ -14,7 +14,7 @@ module.exports = {
      * produces: application/json
      */
     get: function userMovies(req, res, next) {
-        if (!Movie.isValidId(req.params.movieId)) {
+        if (!User.isValidId(req.params.userId)) {
             var badRequest = new Error('Invalid user ID');
             badRequest.status = 400;
             return next(badRequest);
@@ -52,7 +52,7 @@ module.exports = {
      * produces: application/json
      */
     put: function updateUserMovies(req, res, next) {
-        if (!Movie.isValidId(req.params.movieId)) {
+        if (!User.isValidId(req.params.userId)) {
             var badRequest = new Error('Invalid user ID');
             badRequest.status = 400;
             return next(badRequest);
