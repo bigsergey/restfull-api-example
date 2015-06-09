@@ -5,6 +5,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var swaggerize = require('swaggerize-express');
 var path = require('path');
+var expressValidator = require('express-validator');
 
 var app = express();
 var server = http.createServer(app);
@@ -21,6 +22,7 @@ mongoose.connect('mongodb://localhost/restapi', function(err) {
 });
 
 app.use(bodyParser.json());
+app.use(expressValidator());
 
 app.use(swaggerize({
     api: path.resolve('./config/swagger.json'),
@@ -28,38 +30,38 @@ app.use(swaggerize({
 }));
 
 app.use('/api-docs', function(req, res) {
-    res.sendFile(path.join(__dirname,'/config/swagger.json'));
+    res.sendFile(path.join(__dirname, '/config/swagger.json'));
 });
 app.use('/swagger', express.static(path.join(__dirname, 'public')));
 
 
 app.get('*', function(req, res, next) {
-	var err = new Error();
-	next(err);
+    var err = new Error();
+    next(err);
 });
 
 app.use(function(err, req, res, next) {
-	if(err.status !== 404) {
-		return next(err);
-	}
-	res.status(404);
-	res.send(err.message);
+    if (err.status !== 404) {
+        return next(err);
+    }
+    res.status(404);
+    res.send(err.message);
 });
 
 app.use(function(err, req, res, next) {
-	if(err.status !== 400) {
-		return next();
-	}
-	res.status(400);
-	res.send(err.message);
+    if (err.status !== 400) {
+        return next();
+    }
+    res.status(400);
+    res.send(err.message);
 });
 
 app.use(function(err, req, res, next) {
-	if(err.status !== 500) {
-		return next(err);
-	}
-	res.status(500);
-	res.send('Internal server error!');
+    if (err.status !== 500) {
+        return next(err);
+    }
+    res.status(500);
+    res.send('Internal server error!');
 });
 
 server.listen(port, function() {

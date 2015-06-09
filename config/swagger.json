@@ -82,13 +82,19 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "movie response",
+                        "description": "Movie response",
                         "schema": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/movie"
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Movies not found"
+                    },
+                    "400": {
+                        "description": "Validation exception"
                     }
                 }
             }
@@ -324,10 +330,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User updated"
+                        "description": "User deleted",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
                     },
                     "400": {
-                        "description": "Invalid username supplied"
+                        "description": "Invalid userId supplied"
                     },
                     "404": {
                         "description": "User not found"
@@ -354,10 +363,13 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "User deleted"
+                        "description": "User deleted",
+                        "schema": {
+                            "$ref": "#/definitions/user"
+                        }
                     },
                     "400": {
-                        "description": "Invalid username supplied"
+                        "description": "Invalid userId supplied"
                     },
                     "404": {
                         "description": "User not found"
