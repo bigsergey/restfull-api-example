@@ -27,17 +27,31 @@ module.exports = {
                 res.json(post);
             });
         } else {
-            Movie.findByTitle(req.query.title).limit(req.query.limit || 0).exec(function(err, post) {
-                if (err) return next(err);
+            if(req.query.title) {
+                Movie.findByTitle(req.query.title).limit(req.query.limit || 0).exec(function(err, post) {
+                    if (err) return next(err);
 
-                if (!post) {
-                    var notFound = new Error('Movies not found');
-                    notFound.status = 404;
-                    return next(notFound);
-                }
+                    if (!post) {
+                        var notFound = new Error('Movies not found');
+                        notFound.status = 404;
+                        return next(notFound);
+                    }
 
-                res.json(post);
-            });
+                    res.json(post);
+                });
+            } else {
+                Movie.find().limit(req.query.limit || 0).exec(function(err, post) {
+                    if (err) return next(err);
+
+                    if (!post) {
+                        var notFound = new Error('Movies not found');
+                        notFound.status = 404;
+                        return next(notFound);
+                    }
+
+                    res.json(post);
+                });
+            }
         }
     },
     /**
